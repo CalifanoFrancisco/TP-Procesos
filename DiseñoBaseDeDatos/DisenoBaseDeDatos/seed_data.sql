@@ -1,5 +1,5 @@
 INSERT INTO `SistemaDePiezas`.`Piezas` 
-    (`material`)
+    (`material`,`peso`)
 VALUES
     ('rueda', 10),
     ('acero', 20),
