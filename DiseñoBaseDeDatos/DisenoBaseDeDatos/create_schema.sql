@@ -4,7 +4,7 @@ CREATE DATABASE SistemaDePiezas;
 CREATE TABLE `SistemaDePiezas`.`Piezas` (
     `id`            INT NOT NULL AUTO_INCREMENT,
     `material`      VARCHAR(50),
-    `peso`          INT NOT NULL DEFAULT 0
+    `peso`          INT NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
 );
 
