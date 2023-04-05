@@ -1,13 +1,5 @@
-@Initialization commands
+TP de redes
 
-npm init
-tsc --init
-npm install
+hola profe
 
-@ Routes
-GET ----> find() ---> find element/s                                 
-POST ---> create() -> create new element                             
-PATCH --> update() -> modify element                                 
-DELETE -> drop() ---> delete element                                 
-
-
+#swag
