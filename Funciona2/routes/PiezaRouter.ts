@@ -29,7 +29,7 @@ PiezaRouter.post("/", async(req:Request, res:Response) => {
 PiezaRouter.patch("/", async(req:Request, res:Response) => {
     const pieza: Pieza = req.body;
     PiezaModel.update(pieza)
-        .then(    () => res.status(200))
+        .then((stat) => res.status(200).json({}))
         .catch((err) => res.send(500).json({"message": err.message}))
     ;
 });
@@ -37,7 +37,7 @@ PiezaRouter.patch("/", async(req:Request, res:Response) => {
 PiezaRouter.delete("/:id", async(req:Request, res:Response) => {
     const piezaID: Number = Number(req.params.id);
     PiezaModel.drop(piezaID)
-        .then(    () => res.status(200))
+        .then((stat) => res.status(200).json({}))
         .catch((err) => res.send(500).json({"message": err.message}))
     ;
 });
@@ -45,13 +45,35 @@ PiezaRouter.delete("/:id", async(req:Request, res:Response) => {
 PiezaRouter.get("/:id/componentes",async (req:Request, res:Response) => {
     const piezaId: Number = Number(req.params.id);
     PiezaModel.getComponents(piezaId)
-        .then((componentes) => res.status(200).json({"data": componentes}));
+        .then((componentes) => res.status(200).json({"data": componentes}))
+        .catch(       (err) => res.send(500).json({"message": err.message}))
+    ;
 });
 
-/*
-PiezaRouter.get("/:id", async(req:Request, res:Response) => {})
-*/
+PiezaRouter.post("/:id/componentes/:id_componente", async(req:Request, res:Response) => {
+    const piezaID:Number      = Number(req.params.id);
+    const componenteID:Number = Number(req.params.id_componente);
+    PiezaModel.addComponent(piezaID, componenteID)
+        .then((stat) => res.status(200).json({}))
+        .catch((err) => res.send(500).json({"message": err.message}))
+    ;
+});
 
+PiezaRouter.delete("/:id/componentes/:id_componente", async(req:Request, res:Response) => {
+    const piezaID:Number      = Number(req.params.id);
+    const componenteID:Number = Number(req.params.id_componente);
+    PiezaModel.dropComponent(piezaID, componenteID)
+        .then((stat) => res.status(200).json({}))
+        .catch((err) => res.send(500).json({"message": err.message})) 
+    ;
+});
+
+PiezaRouter.propfind("/ids", async(req:Request, res:Response) => {
+    PiezaModel.getIDs()
+        .then( (ids) => res.status(200).json({"data": ids}))
+        .catch((err) => res.send(500).json({"message": err.message}))
+    ;
+});
 
 export { PiezaRouter };
 
