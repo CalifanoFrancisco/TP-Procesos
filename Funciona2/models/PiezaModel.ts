@@ -26,7 +26,7 @@ export class PiezaModel {
                 (err, res) => {
                     if (err) reject(err);
                     const row = (<RowDataPacket> res)[0];
-                    const pieza: Pieza = new Pieza(row.id, row.material, row.peso)
+                    const pieza: Pieza = new Pieza(row.id, row.material, row.peso);
                     resolve(pieza);
                 }
             );
@@ -59,7 +59,7 @@ export class PiezaModel {
                 [pieza.material, pieza.peso, pieza.id],
                 (err, res) => {
                     if (err) reject(err);
-                    resolve(1);
+                    resolve(200);
                 }
             );
         });
@@ -72,7 +72,7 @@ export class PiezaModel {
                 [id],
                 (err, res) => {
                     if (err) reject(err);
-                    resolve(1);
+                    resolve(200);
                 }
             )
         });
@@ -106,7 +106,7 @@ export class PiezaModel {
                 [id_componente, id_pieza],
                 (err, res) => {
                     if (err) reject(err);
-                    resolve(1);
+                    resolve(200);
                 }
             );
         });
