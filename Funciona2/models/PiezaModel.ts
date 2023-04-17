@@ -2,11 +2,6 @@ import { OkPacket, RowDataPacket } from "mysql2";
 import { Pieza } from "../types/Pieza";
 import { db }    from "../db";
 
-/*
-
-DELETE & PATCH not working: they modify database but get stuck after
-*/
-
 export class PiezaModel {
     public static create (pieza:Pieza):Promise<Number> { 
         const queryString = "INSERT INTO Piezas (material, peso) VALUES (?, ?)";
