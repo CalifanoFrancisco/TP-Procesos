@@ -548,49 +548,6 @@
                     }
                 }
             },
-            "post":{
-                "tags": ["piezaslinker","post"],
-                "summary": "Añdir elemento a la tabla",
-                "description": "",
-                "parameters": [],
-                "responses": {
-                    "500": {
-                        "description": "Error interno del servidor"
-                    },
-                    "200": {
-                        "description": "Operación exitosa",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id":       { "type": "integer" }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch":{
-                "tags": ["piezaslinker","patch"],
-                "summary": "Editar linker existente",
-                "description": "",
-                "parameters": [],
-                "responses": {
-                    "500": {
-                        "description": "Error interno del servidor"
-                    },
-                    "200": {
-                        "description": "Operación exitosa",
-                        "content": {}
-                    }
-                }
-            }
-        },
         "/piezaslinker/:id": {
             "get":{
                 "tags": ["piezaslinker","get"],
@@ -623,27 +580,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["piezaslinker","delete"],
-                "summary": "Eliminar elemento de la tabla",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "description": "llave del elemento",
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "500": {
-                        "description": "Error interno del servidor"
-                    },
-                    "200": {
-                        "description": "Operación exitosa",
-                        "content": {}
                     }
                 }
             }
