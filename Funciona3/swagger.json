@@ -1,0 +1,694 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "3.3.3",
+        "title": "Piezas y procesos",
+        "description": "Base de datos para piezas, piezas de las que estan compuestas y procesos que transfoman estas piezas en otras"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/piezas"
+        }
+    ],
+    "paths": {
+        "/piezas": {
+            "get": {
+                "tags": [
+                    "Piezas",
+                    "get"
+                ],
+                "summary": "Muestra la informacion de la tabla",
+                "description": "Muestra todos los elementos de la tabla de piezas",
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "material": {
+                                                "type": "string"
+                                            },
+                                            "peso": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Piezas",
+                    "post"
+                ],
+                "summary": "Añade elemento nuevo a la base de datos ",
+                "description": "Recibe un body y lo añade a la tabla Piezas",
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "pieza_id": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Piezas",
+                    "patch"
+                ],
+                "summary": "Modifica elemento de la tabla",
+                "description": "Recibe llave del elemento y si existe lo modifica con el body enviado",
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezas/ids": {
+            "propfind": {
+                "tags": [
+                    "Piezas",
+                    "propfind"
+                ],
+                "summary": "Muestra todas las ids validas",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "IDs": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezas/:id": {
+            "get": {
+                "tags": [
+                    "Piezas",
+                    "get"
+                ],
+                "summary": "Muestra un elemento de la tabla",
+                "description": "Recibe una llave y la busca en la tabla, y si existe la devuelve",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "primary key from element",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "material": {
+                                                "type": "string"
+                                            },
+                                            "peso": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Piezas",
+                    "delete"
+                ],
+                "summary": "Elimina elemento de la tabla",
+                "description": "Recibe llave del elemento y si existe lo elimina",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "primary key from element",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezas/:id/componentes": {
+            "get": {
+                "tags": [
+                    "Piezas",
+                    "get"
+                ],
+                "summary": "Muestra los componentes de la pieza elegida",
+                "description": "Recibe la llave de un elemento y devuelve un array de todos los elementos de los que esta compuesta",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "primary key from element",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "material": {
+                                                "type": "string"
+                                            },
+                                            "peso": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezas/:id_pieza/componentes/:id_componente": {
+            "post": {
+                "tags": [
+                    "Piezas",
+                    "post"
+                ],
+                "summary": "Aañade elemento de una pieza",
+                "description": "Añade componente necesario para fabricar una pieza",
+                "parameters": [
+                    {
+                        "name": "id_pieza",
+                        "description": "pieza element key",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id_componente",
+                        "description": "componente (pieza) element key",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Piezas",
+                    "delete"
+                ],
+                "summary": "Elimina componente de una pieza",
+                "description": "Elimina elemento necesario para fabricar una pieza",
+                "parameters": [
+                    {
+                        "name": "id_pieza",
+                        "description": "pieza element key",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id_componente",
+                        "description": "componente (pieza) element key",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/procesos": {
+            "get": {
+                "tags": [
+                    "Proceso",
+                    "get"
+                ],
+                "summary": "Muestra todos los procesos en la base",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "id_pieza_salida": {
+                                                "type": "integer"
+                                            },
+                                            "tipo": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Proceso",
+                    "post"
+                ],
+                "summary": "Añade proceso a la base",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Proceso",
+                    "patch"
+                ],
+                "summary": "Editar proceso existente",
+                "description": "Recibe un body y modifica el elemento con el que comparta la llave",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/procesos/:id": {
+            "get": {
+                "tags": [
+                    "Proceso",
+                    "get"
+                ],
+                "summary": "Muestra el proceso especificado por la llave",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "llave del elemento",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "id_pieza_salida": {
+                                                "type": "integer"
+                                            },
+                                            "tipo": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Proceso",
+                    "delete"
+                ],
+                "summary": "Elimina proceso de la base",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "llave del elemento",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/procesos/:id/piezasentrada": {
+            "get": {
+                "tags": [
+                    "Proceso",
+                    "get"
+                ],
+                "summary": "Mostrar piezas de entrada de un proceso",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "llave del elemento",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "id_pieza_salida": {
+                                                "type": "integer"
+                                            },
+                                            "tipo": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/procesos/:id/piezassalida": {
+            "get": {
+                "tags": [
+                    "Proceso",
+                    "get"
+                ],
+                "summary": "Muestra la pieza de salida del proceso",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "llave del elemento",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/procesos/ids": {
+            "propfind": {
+                "tags": [
+                    "Proceso",
+                    "propfind"
+                ],
+                "summary": "Muestra todas las ids validas",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "IDs": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezaslinker": {
+            "get": {
+                "tags": [
+                    "piezaslinker",
+                    "get"
+                ],
+                "summary": "Muestra todos los elementos de la tabla",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id_componente": {
+                                                "type": "integer"
+                                            },
+                                            "id_pieza": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/piezaslinker/:id": {
+            "get": {
+                "tags": [
+                    "piezaslinker",
+                    "get"
+                ],
+                "summary": "Muestra el elemento especificado",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "llave del elemento",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Error interno del servidor"
+                    },
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id_componente": {
+                                                "type": "integer"
+                                            },
+                                            "id_pieza": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
