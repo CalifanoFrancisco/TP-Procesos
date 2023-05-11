@@ -7,6 +7,16 @@ import { SECRET_KEY } from "../middleware/auth";
 
 export class UsuarioModel {
 
+    public name:string;
+    public password:string;
+    public salt:string;
+
+    constructor(__name:string, __salt:string,__password:string) {
+        this.name     = __name;
+        this.salt     = __salt;
+        this.password = __password;
+    }
+    
     public static register(user:Usuario):Promise<Number> {
 
         const saltRounds = 1;
@@ -41,7 +51,7 @@ export class UsuarioModel {
             const isMatch:boolean = (inputPassword == truePassword);
 
             if (inputPassword == truePassword) {
-                const token = this.getToken(user);
+                const token = this.getToken(new UsuarioModel(user.name, salt, user.password));
                 console.log("Sign:" + token);
                 resolve(token);
             } else {
@@ -50,7 +60,7 @@ export class UsuarioModel {
         });
     }
     
-    private static getToken(user:Usuario):string {
+    private static getToken(user:UsuarioModel):string {
         return jwt.sign(
             {
                 name: user.name,
