@@ -1,16 +1,17 @@
 import express, { Request, Response } from "express"
 import { PiezaModel } from "../models/PiezaModel";
 import { Pieza } from "../types/Pieza";
+import { auth } from "../middleware/auth";
 
 const PiezaRouter = express.Router();
 
-PiezaRouter.get("/", async (req:Request, res:Response) => {
+PiezaRouter.get("/", auth, async (req:Request, res:Response) => {
     PiezaModel.findAll()
         .then((piezas) => res.status(200).json({"data": piezas}))
         .catch(  (err) => res.send(500)  .json({"message": err.message}))
     ;
 });
-PiezaRouter.get("/:id", async(req:Request, res:Response) => {
+PiezaRouter.get("/:id", auth, async(req:Request, res:Response) => {
     const piezaId: Number = Number(req.params.id);
     PiezaModel.findOne(piezaId)
         .then((pieza) => res.status(200).json({"data": pieza}))
@@ -18,7 +19,7 @@ PiezaRouter.get("/:id", async(req:Request, res:Response) => {
     ;
 });
 
-PiezaRouter.post("/", async(req:Request, res:Response) => {
+PiezaRouter.post("/", auth, async(req:Request, res:Response) => {
     const newPieza: Pieza = req.body;
     PiezaModel.create(newPieza)
         .then((pieza_id) => res.status(200).json({"data": pieza_id}))
@@ -26,7 +27,7 @@ PiezaRouter.post("/", async(req:Request, res:Response) => {
     ;
 });
 
-PiezaRouter.patch("/", async(req:Request, res:Response) => {
+PiezaRouter.patch("/", auth, async(req:Request, res:Response) => {
     const pieza: Pieza = req.body;
     PiezaModel.update(pieza)
         .then((stat) => res.status(200).json({}))
@@ -34,7 +35,7 @@ PiezaRouter.patch("/", async(req:Request, res:Response) => {
     ;
 });
 
-PiezaRouter.delete("/:id", async(req:Request, res:Response) => {
+PiezaRouter.delete("/:id", auth, async(req:Request, res:Response) => {
     const piezaID: Number = Number(req.params.id);
     PiezaModel.drop(piezaID)
         .then((stat) => res.status(200).json({}))
@@ -42,7 +43,7 @@ PiezaRouter.delete("/:id", async(req:Request, res:Response) => {
     ;
 });
 
-PiezaRouter.get("/:id/componentes",async (req:Request, res:Response) => {
+PiezaRouter.get("/:id/componentes", auth, async (req:Request, res:Response) => {
     const piezaId: Number = Number(req.params.id);
     PiezaModel.getComponents(piezaId)
         .then((componentes) => res.status(200).json({"data": componentes}))
@@ -50,7 +51,7 @@ PiezaRouter.get("/:id/componentes",async (req:Request, res:Response) => {
     ;
 });
 
-PiezaRouter.post("/:id/componentes/:id_componente", async(req:Request, res:Response) => {
+PiezaRouter.post("/:id/componentes/:id_componente", auth, async(req:Request, res:Response) => {
     const piezaID:Number      = Number(req.params.id);
     const componenteID:Number = Number(req.params.id_componente);
     PiezaModel.addComponent(piezaID, componenteID)
@@ -59,7 +60,7 @@ PiezaRouter.post("/:id/componentes/:id_componente", async(req:Request, res:Respo
     ;
 });
 
-PiezaRouter.delete("/:id/componentes/:id_componente", async(req:Request, res:Response) => {
+PiezaRouter.delete("/:id/componentes/:id_componente", auth, async(req:Request, res:Response) => {
     const piezaID:Number      = Number(req.params.id);
     const componenteID:Number = Number(req.params.id_componente);
     PiezaModel.dropComponent(piezaID, componenteID)
@@ -68,7 +69,7 @@ PiezaRouter.delete("/:id/componentes/:id_componente", async(req:Request, res:Res
     ;
 });
 
-PiezaRouter.propfind("/ids", async(req:Request, res:Response) => {
+PiezaRouter.propfind("/ids", auth, async(req:Request, res:Response) => {
     PiezaModel.getIDs()
         .then( (ids) => res.status(200).json({"data": ids}))
         .catch((err) => res.send(500).json({"message": err.message}))

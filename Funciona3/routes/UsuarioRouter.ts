@@ -33,7 +33,7 @@ UsuarioRouter.post("/login", async(req:Request, res:Response) => {
     ;
 });
 
-UsuarioRouter.get("/", async(req:Request, res:Response) => {
+UsuarioRouter.get("/", auth, async(req:Request, res:Response) => {
     UsuarioModel.findAll()
         .then((users) => res.status(200).json({"data": users}))
         .catch( (err) => res.send(500).json({"message": err.message}))
