@@ -1,11 +1,10 @@
 export class Usuario {
+
     password:string;
-    name:String;
-    salt:String;
+    name:string;
     
-    constructor(_name:String, _password:string, _salt:String) {
+    constructor(_name:string, _password:string, _salt:String) {
         this.name     = _name;
-        this.salt     = _salt;
         this.password = _password;
     }
 }
